@@ -9,6 +9,9 @@ configurable string tenantId = ?;
 configurable int pageSize = 50;
 
 public function main() returns error? {
+    if pageSize <= 0 {
+        return error(string `pageSize must be a positive integer, but was ${pageSize}`);
+    }
     assets:Client xeroAssets = check new ({
         auth: {clientId, clientSecret, refreshToken, refreshUrl}
     });

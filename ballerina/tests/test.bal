@@ -21,8 +21,16 @@ import ballerina/test;
 
 final boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
 final string serviceUrl = isLiveServer ? "https://api.xero.com/assets.xro/1.0" : "http://localhost:9090";
-final string token = isLiveServer ? os:getEnv("XERO_ACCESS_TOKEN") : "test_token";
-final string tenantId = isLiveServer ? os:getEnv("XERO_TENANT_ID") : "00000000-0000-0000-0000-000000000000";
+final string token = isLiveServer ? check getLiveEnv("XERO_ACCESS_TOKEN") : "test_token";
+final string tenantId = isLiveServer ? check getLiveEnv("XERO_TENANT_ID") : "00000000-0000-0000-0000-000000000000";
+
+isolated function getLiveEnv(string name) returns string|error {
+    string value = os:getEnv(name);
+    if value == "" {
+        return error(string `${name} must be set when IS_LIVE_SERVER is true`);
+    }
+    return value;
+}
 
 final Client xeroAssets = check new ({
     auth: {token},

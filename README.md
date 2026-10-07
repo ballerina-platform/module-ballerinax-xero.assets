@@ -27,17 +27,17 @@ Open the **Configuration** page of the app and generate a client secret. Note do
 
 ### Step 3: Get a refresh token
 
-1. Direct the user to the authorization URL, replacing `YOUR_CLIENT_ID` and `YOUR_REDIRECT_URI`. Include the `offline_access` scope so that a refresh token is issued.
+1. Direct the user to the authorization URL, replacing `YOUR_CLIENT_ID` and `YOUR_REDIRECT_URI`, and replace `YOUR_STATE` with a random, unguessable value generated for this request (for example, with `openssl rand -hex 16`). Include the `offline_access` scope so that a refresh token is issued.
 
    ```
-   https://login.xero.com/identity/connect/authorize?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=openid profile email assets offline_access
+   https://login.xero.com/identity/connect/authorize?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=openid profile email assets offline_access&state=YOUR_STATE
    ```
 
-2. Exchange the authorization code returned to your redirect URI for tokens.
+2. Check that the `state` returned to your redirect URI matches the value you sent, and stop if it does not. Then exchange the authorization code for tokens. curl prompts for the client secret, so it is not echoed or kept in your shell history.
 
    ```bash
    curl -X POST https://identity.xero.com/connect/token \
-     -H "Authorization: Basic $(echo -n 'CLIENT_ID:CLIENT_SECRET' | base64)" \
+     -u CLIENT_ID \
      -d "grant_type=authorization_code&code=AUTHORIZATION_CODE&redirect_uri=YOUR_REDIRECT_URI"
    ```
 
