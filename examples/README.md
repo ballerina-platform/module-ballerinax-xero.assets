@@ -2,13 +2,23 @@
 
 The `ballerinax/xero.assets` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. **[Asset register review](https://github.com/ballerina-platform/module-ballerinax-xero.assets/tree/main/examples/asset_register_review)** - Page through every registered fixed asset, total the purchase price and book value, and inspect the latest purchase.
+
+2. **[Asset type onboarding](https://github.com/ballerina-platform/module-ballerinax-xero.assets/tree/main/examples/asset_type_onboarding)** - Create a fixed asset type if it is missing, record a new asset against it and confirm the numbering settings.
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. Generate Xero credentials to authenticate the connector as described in the [Setup guide](https://central.ballerina.io/ballerinax/xero.assets/latest#setup-guide).
+
+2. For each example, create a `Config.toml` file with the related configuration. Here's an example of how your Config.toml file should look:
+
+```toml
+clientId = "<client-id>"
+clientSecret = "<client-secret>"
+refreshToken = "<refresh-token>"
+refreshUrl = "https://identity.xero.com/connect/token"
+tenantId = "<xero-tenant-id>"
+```
 
 ## Running an example
 
